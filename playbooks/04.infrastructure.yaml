@@ -1,0 +1,22 @@
+--- # Infrastructure demo YAML - install nginx on debian with Debug
+- hosts: debian
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks: 
+  - name: Install NginX service on all instances that belong to debian group
+    apt:
+      name: nginx
+      state: latest
+    notify: 
+    - enable and restart nginx service
+    register: output
+  - debug: var=output
+  handlers:
+  - name: enable and restart nginx service
+    service:
+      name: nginx
+      enabled: yes
+      state: restarted

@@ -1,0 +1,12 @@
+--- # Infrastructure demo YAML - testing variables
+- hosts: '{{ var_hosts }}'
+  remote_user: '{{ var_user }}'
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  connection: ssh
+  tasks: 
+  - name: Install package define by vars section
+    yum:
+      name: '{{ var_pkg }}'
+      state: latest
